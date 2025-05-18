@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agency Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+ {% include 'partials/navbar.html' %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Welcome to Your Agency Dashboard</h2>
+
+    <!-- Display Alert Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Complaint Table -->
+    {% if complaints %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Complaints Assigned to You</h5>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Citizen</th>
+                            <th>Email</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in complaints %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ complaint.citizen_name }}</td>
+                                <td>{{ complaint.citizen_email }}</td>
+                                <td>{{ complaint.category }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 
+                                        complaint.status|lower|yesno:'success,warning,secondary'
+                                    }}">{{ complaint.status }}</span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'respond_to_complaint' complaint.id %}" class="btn btn-sm btn-primary">
+                                        View / Respond
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No complaints assigned to your agency yet.
+        </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% include 'partials/footer.html' %}
+</body>
+</html>

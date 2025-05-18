@@ -1,0 +1,19 @@
+<!-- Blue Navbar -->
+<div style="background-color: #007bff; padding: 15px 30px; color: white; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
+    
+    <!-- Left: CIS -->
+    <div style="font-weight: bold; font-size: 20px;">
+       <a href="{% url 'home' %}" style="color: white; text-decoration: none;">CES</a> 
+    </div>
+
+    <!-- Center: Welcome message + submit link -->
+    <div style="font-size: 16px;">
+        Welcome to Citizen Engagement System - 
+        <a href="{% url 'submit_complaint' %}" style="color: #ffeb3b; text-decoration: underline;">Submit Complaint Here</a>
+    </div>
+
+    <!-- Right: Login -->
+    <div>
+        <a href="{% url 'agency_login' %}" style="color: white; text-decoration: none; font-weight: bold;">Login</a>
+    </div>
+</div>

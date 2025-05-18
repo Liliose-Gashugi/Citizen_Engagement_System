@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complaint Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f4f4;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        p {
+            margin: 12px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        strong {
+            color: #555;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .status.resolved {
+            color: green;
+        }
+        .status.progress {
+            color: orange;
+        }
+        .status.open {
+            color: red;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+     {% include 'partials/navbar.html' %}
+    <div class="container">
+        <h2>Complaint Status</h2>
+
+        <p><strong>Citizen Name:</strong> {{ complaint.citizen_name }}</p>
+        <p><strong>Email:</strong> {{ complaint.citizen_email }}</p>
+        <p><strong>Category:</strong> {{ complaint.category }}</p>
+        <p><strong>Agency:</strong> {{ complaint.agency }}</p>
+        <p><strong>Description:</strong> {{ complaint.description }}</p>
+        <p><strong>Status:</strong>
+            <span class="status 
+                {% if complaint.status == 'Resolved' %}resolved
+                {% elif complaint.status == 'In Progress' %}progress
+                {% else %}open{% endif %}">
+                {{ complaint.status }}
+            </span>
+        </p>
+
+        {% if complaint.response %}
+            <p><strong>Agency Response:</strong> {{ complaint.response }}</p>
+        {% endif %}
+
+        <div style="text-align: center;">
+            <a href="{% url 'submit_complaint' %}" class="btn">Submit Another Complaint</a>
+        </div>
+    </div>
+    {% include 'partials/footer.html' %}
+</body>
+</html>
